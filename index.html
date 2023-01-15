@@ -1,0 +1,70 @@
+<html>
+
+<body>
+    <button type="button" onclick="reset();createProblem()">Create Problem</button>
+    <div id="main" style="padding-left:5%;font-size:1.5em;"></div>
+    <script src="math.js"></script>
+    <script>
+        function createProblem() {
+            const question = new Quadratic()
+            const problem = document.createElement("p")
+            problem.style = "font-weight: bold;"
+            const problems = question.getProblem()
+            for (var i = 0; i < problems.length; i++) {
+                problem.innerHTML += problems[i] + "<br/>"
+            }
+            const ans = document.createElement("form")
+            const answers = question.getAnswers()
+            for (var i = 0; i < answers.length; ++i) {
+                const ainput = document.createElement("input")
+                ainput.type = "radio"
+                ainput.name = "answers"
+                ainput.tagName =
+                    ainput.id = i
+                ainput.value = answers[i].text
+                const alabel = document.createElement("label")
+                if (answers[i].isCorrect) {
+                    alabel.id = "correct"
+                }
+                alabel.setAttribute("for", i)
+                alabel.innerHTML = " " + String.fromCharCode(65 + i) + ") " + answers[i].text
+                const p = document.createElement("p")
+                p.appendChild(ainput)
+                p.appendChild(alabel)
+                ans.appendChild(p)
+            }
+            const explanation = document.createElement("p")
+            explanation.hidden = true
+            explanation.id = "explanation"
+            const explanations = question.getExplanation()
+            for (var i = 0; i < explanations.length; i++) {
+                explanation.innerHTML += (explanations[i] + "<br/>")
+            }
+            const submitButton = document.createElement("button")
+            submitButton.type = "button"
+            submitButton.id = "submit"
+            submitButton.setAttribute("onclick", "onSubmit()")
+            submitButton.innerHTML = "Show solution"
+            document.getElementById("main").appendChild(problem)
+            document.getElementById("main").appendChild(ans)
+            document.getElementById("main").appendChild(submitButton)
+            document.getElementById("main").appendChild(explanation)
+        }
+
+        function reset() {
+            document.getElementById("main").innerHTML = ""
+        }
+
+        function onSubmit() {
+            document.getElementById("explanation").hidden = false
+            document.getElementById("correct").style = 'color: green; font-weight: bolder'
+            document.getElementById("submit").setAttribute("disabled", "true")
+            const inputs = document.getElementsByTagName("INPUT")
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].setAttribute("disabled", "true")
+            }
+        }
+    </script>
+</body>
+
+</html>
