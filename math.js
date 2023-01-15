@@ -25,7 +25,7 @@ class Quadratic {
         const secondTerm = this.getSecondTerm();
         const thirdTerm = this.getThirdTerm();
         return ["Find the value of:",
-            `${this.getBooleanString(this.firstTermPlusMinus, "-", "")}` + firstTerm +
+            `${this.getBooleanString(this.firstTermPlusMinus, "-1x", "")}` + firstTerm +
                 `${this.getBooleanString(this.secondTermPlusMinus, " - ", " + ")}` + secondTerm +
                 `${this.getBooleanString(this.thirdTermPlusMinus, " - ", " + ")}` + thirdTerm];
     }
@@ -60,7 +60,7 @@ class Quadratic {
         var result = []; //this.getProblem().slice(1)
         result.push("<b>Solve each term first:</b>");
         result.push(`&nbsp;&nbsp;&nbsp;&nbsp;` +
-            `${this.getBooleanString(this.firstTermPlusMinus, "-", "")}${this.getFirstTerm()}` +
+            `${this.getBooleanString(this.firstTermPlusMinus, "-1x", "")}${this.getFirstTerm()}` +
             ` = ${(this.firstTermPlusMinus ? -1 : 1) * Math.pow(this.firstTermBase, this.firstTermExponent)}`);
         result.push(`&nbsp;&nbsp;&nbsp;&nbsp;` +
             `${this.getBooleanString(this.secondTermPlusMinus, "-", "")}${this.getSecondTerm()}` +
