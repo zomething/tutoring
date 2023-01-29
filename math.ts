@@ -143,8 +143,56 @@ class AlgebraFirstOrder implements MathProblem {
             `x=${this.x}`]
 
     }
+}
 
-    private getBooleanString(b: boolean, f: string, t: string): string {
-        return b ? f : t
+
+class Quadratic implements MathProblem {
+    readonly x1: number
+    readonly x2: number
+
+    constructor() {
+        this.x1 = (Math.random() < .5 ? -1 : 1) * (Math.round(Math.random() * 4) + 1)
+        this.x2 = (Math.random() < .5 ? -1 : 1) * (Math.round(Math.random() * 4) + 1)
+    }
+
+    getFirstCoef(): number {
+        return -1*(this.x1+this.x2)
+    }
+
+    getSecondCoef(): number {
+        return this.x1*this.x2
+    }
+
+    getFormula(): string {
+        return `x^2` + 
+        (this.getFirstCoef() == 0 ? "" : `${this.getFirstCoef() < 0 ? "" : "+"}${this.getFirstCoef()}x${this.getSecondCoef() < 0 ? "" : "+"}`)+
+        `${this.getSecondCoef()}=0`
+    }
+
+    getProblem(): string[] {
+        return ["\\text{Find a value of }x:", this.getFormula()]
+    }
+    getAnswers(): Answer[] {
+        var result = this.x1 == this.x2 ? [new Answer(`${this.x1}`, true)] : [new Answer(`${this.x1}`, true), new Answer(`${this.x2}`, true)]
+        while (result.length < 5) {
+            const fakeAnswer = `${this.x1 + (Math.random() < .5 ? -1 : 1) * Math.round(Math.random() * 
+                Math.max(5, this.x1 * .1))}`
+            if (result.findIndex((i) => i.text === fakeAnswer) == -1) {
+                result.push(new Answer(fakeAnswer, false))
+            }
+        }
+        return result.sort((i,j) => parseInt(i.text) - parseInt(j.text))
+    }
+
+    getExplanation(): string[] {
+        return ["\\text{Replace the }x\\text{ with your guess, and see if the result equals 0:}", 
+        `${this.x1 < 0 ? "(" : ""}${this.x1}${this.x1 < 0 ? ")" : ""}^2` + 
+        (this.getFirstCoef() == 0 ? "" : `${this.getFirstCoef() < 0 ? "" : "+"}${this.getFirstCoef()}\\times${this.x1}${this.getSecondCoef() < 0 ? "" : "+"}`)+
+        `${this.getSecondCoef()}=0`].concat(
+        (this.x1 == this.x2 ? [] : 
+        [`${this.x2 < 0 ? "(" : ""}${this.x2}${this.x2 < 0 ? ")" : ""}^2` + 
+        (this.getFirstCoef() == 0 ? "" : `${this.getFirstCoef() < 0 ? "" : "+"}${this.getFirstCoef()}\\times${this.x2}${this.getSecondCoef() < 0 ? "" : "+"}`)+
+        `${this.getSecondCoef()}=0`]))
+
     }
 }

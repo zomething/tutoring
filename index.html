@@ -9,6 +9,8 @@
     <button type="button" onclick="reset();createProblem(new Calculator())">Create Calculator Problem</button>
     &nbsp;
     <button type="button" onclick="reset();createProblem(new AlgebraFirstOrder())">Create x Problem</button>
+    &nbsp;
+    <button type="button" onclick="reset();createProblem(new Quadratic())">Create x<sup>2</sup> Problem</button>
     <div id="main" style="padding-left:5%;font-size:1.5em;"></div>
     <script src="math.js"></script>
     <script>
@@ -18,7 +20,6 @@
             const problems = question.getProblem()
             for (var i = 0; i < problems.length; i++) {
                 mathJaxRender(problems[i], problem)
-                // problem.innerHTML += problems[i] + "<br/>"
             }
             const ans = document.createElement("form")
             const answers = question.getAnswers()
@@ -31,7 +32,7 @@
                 ainput.value = answers[i].text
                 const alabel = document.createElement("label")
                 if (answers[i].isCorrect) {
-                    alabel.id = "correct"
+                    alabel.className = "correct"
                 }
                 alabel.setAttribute("for", i)
                 alabel.innerHTML = " " + String.fromCharCode(65 + i) + ") " + answers[i].text
@@ -46,7 +47,6 @@
             const explanations = question.getExplanation()
             for (var i = 0; i < explanations.length; i++) {
                 mathJaxRender(explanations[i], explanation)
-                // explanation.innerHTML += (explanations[i] + "<br/>")
             }
             const submitButton = document.createElement("button")
             submitButton.type = "button"
@@ -65,7 +65,10 @@
 
         function onSubmit() {
             document.getElementById("explanation").hidden = false
-            document.getElementById("correct").style = 'color: green; font-weight: bolder'
+            const correct = document.getElementsByClassName("correct")
+            for (var i = 0; i < correct.length; i++) {
+                correct[i].style = 'color: green; font-weight: bolder'
+            }
             document.getElementById("submit").setAttribute("disabled", "true")
             const inputs = document.getElementsByTagName("INPUT")
             for (var i = 0; i < inputs.length; i++) {
