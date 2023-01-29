@@ -18,7 +18,6 @@
             const problems = question.getProblem()
             for (var i = 0; i < problems.length; i++) {
                 mathJaxRender(problems[i], problem)
-                // problem.innerHTML += problems[i] + "<br/>"
             }
             const ans = document.createElement("form")
             const answers = question.getAnswers()
@@ -46,7 +45,6 @@
             const explanations = question.getExplanation()
             for (var i = 0; i < explanations.length; i++) {
                 mathJaxRender(explanations[i], explanation)
-                // explanation.innerHTML += (explanations[i] + "<br/>")
             }
             const submitButton = document.createElement("button")
             submitButton.type = "button"
