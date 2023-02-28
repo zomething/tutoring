@@ -144,3 +144,37 @@ class Quadratic {
                     `${this.getSecondCoef()}=0`]));
     }
 }
+class CircleProblem {
+    constructor() {
+        this.radius = (Math.round(Math.random() * 14) + 1);
+        this.circumferenceOrArea = Math.random() < .5;
+        this.radiusOrDiameter = Math.random() < .5;
+    }
+    getCorrectAnswer() {
+        return this.circumferenceOrArea ? 3.14 * 2 * this.radius : 3.14 * this.radius * this.radius;
+    }
+    getProblem() {
+        return [`\\text{A circle has a radius of ${this.radius}}`,
+            `\\text{What is the ${this.circumferenceOrArea ? "circumference" : "area"}?}`];
+    }
+    getAnswers() {
+        var result = [new Answer(`${this.getCorrectAnswer().toFixed(2)}`, true)];
+        while (result.length < 4) {
+            const fakeAnswer = `${Math.max(this.getCorrectAnswer() +
+                (Math.random() < .5 ? -1 : 1) * (Math.random() + .1), .1).toFixed(2)}`;
+            if (result.findIndex((i) => i.text === fakeAnswer) == -1) {
+                result.push(new Answer(fakeAnswer, false));
+            }
+        }
+        return result.sort((i, j) => parseInt(i.text) - parseInt(j.text));
+    }
+    getExplanation() {
+        return [`${this.circumferenceOrArea ?
+                "circumference = \\pi \\times diameter = \\pi \\times 2 \\times radius" :
+                "area = \\pi \\times radius^2"}`,
+            this.circumferenceOrArea ?
+                `circumference = 3.14 \\times 2 \\times ${this.radius} = ${this.getCorrectAnswer()}` :
+                `area = 3.14 \\times ${this.radius}^2 = ${this.getCorrectAnswer()}`,
+        ];
+    }
+}
