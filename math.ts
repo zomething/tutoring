@@ -203,7 +203,7 @@ class CircleProblem implements MathProblem {
     readonly radiusOrDiameter: boolean
 
     constructor() {
-        this.radius = (Math.round(Math.random() * 14) + 1)
+        this.radius = (Math.round(Math.random() * 29) + 1)
         this.circumferenceOrArea = Math.random() < .5
         this.radiusOrDiameter = Math.random() < .5
     }
